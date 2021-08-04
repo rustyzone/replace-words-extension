@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>replaceWords Options</title></head>
+  <style>
+  .hidden{
+    display:none;
+  }
+</style>
+<body>
+
+  <div class="keywords-holder">
+    <div class="keyword-row">
+      <div><button class="remove">Remove Row</button></div>
+      <div class="input-item keyword">
+        <label>Keyword</label>
+        <input type="text" value="" placeholder="Keyword..."/>
+      </div>
+      <div class="input-item type">
+        <label>Select Type</label>
+        <select>
+          <option value="0">Remove</option>
+          <option value="1">Replace</option>
+          <option value="2">Blur</option>
+        </select>
+      </div>
+      <div class="input-item hidden replace">
+        <label>Replace With</label>
+        <input type="text" value="" placeholder="Replacement word..."/>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <button class="add-keyword">Add Another Keyword</button>
+  </div>
+
+
+
+  <div id="status"></div>
+  <button id="save">Save</button>
+
+  <script src="opt.js"></script>
+</body>
+</html>
