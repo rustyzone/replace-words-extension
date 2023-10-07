@@ -1,33 +1,34 @@
 // Saves options to chrome.storage
-
-function buildSaveArray(){
-  //....
-  var saveArray = [];
-  var element = document.querySelectorAll('.keyword-row');
-  for (var i = 0; i < element.length; i++) {
-
-    var obj = {};
-    obj.keyword = element[i].querySelector('.keyword input').value;
-    obj.type = element[i].querySelector('.type select').value;
-    obj.replace = element[i].querySelector('.replace input').value;
+const buildSaveArray = () => {
+  const elements = document.querySelectorAll('.keyword-row')
+  const saveArray = [];
+  // only include if row if not hidden
+  elements.forEach(function (element) {
+    if(element.style.display === 'none'){
+      return;
+    }
+    const obj = {
+      keyword: element.querySelector('.keyword input').value,
+      type: element.querySelector('.type select').value,
+      replace: element.querySelector('.replace input').value
+    };
     saveArray.push(obj);
-  }
+  });
+  saveOptions(saveArray);
+};
 
-  save_options(saveArray)
-}
-function save_options(saveArray) {
-
+const saveOptions = (saveArray) => {
   chrome.storage.sync.set({
     keywordsArray: saveArray
   }, function() {
-    // Update status to let user know options were saved.
-    var status = document.getElementById('status');
+    // Handle the completion of saving options if needed
+      var status = document.getElementById('status');
     status.textContent = 'Options saved.';
     setTimeout(function() {
       status.textContent = '';
     }, 750);
   });
-}
+};
 
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
@@ -89,6 +90,11 @@ function createRowWithOptions(obj, int = 0){
     }
   });
   newEle.querySelector('.remove').addEventListener('click', function(e){
+    // if only one element just hide it
+    if(document.querySelectorAll('.keyword-row').length == 1){
+      document.querySelector('.keyword-row').style.display = 'none';
+      return;
+    }
     newEle.remove();
   });
 
