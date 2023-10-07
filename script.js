@@ -10,22 +10,33 @@ function replacePageWords(keywordsArray){
     replaceWord(keywordsArray[i]);
   }
 }
-function replaceWord(obj){
+const replaceWord = (obj) => {
   console.log('replace checks for obj', obj);
-  var allElements = document.querySelectorAll('h1, h2, h3, h4, h5, p, a, caption, span, td');
-  for (var i = 0; i < allElements.length; i++) {
-    if(allElements[i].innerText.toLowerCase().includes(obj.keyword.toLowerCase())){
-      if(obj.type == '0'){
-        //remove
-        allElements[i].innerHTML = allElements[i].innerHTML.replace(obj.keyword, '');
-      }else if(obj.type == '1'){
-        //replace
-        allElements[i].innerHTML = allElements[i].innerHTML.replace(obj.keyword, obj.replace);
-      }else if(obj.type == '2'){
-        //blur
-        allElements[i].style.color='transparent';
-        allElements[i].style.textShadow='0 0 8px rgba(0,0,0,0.5)';
+  const elementsToReplace = document.querySelectorAll('h1, h2, h3, h4, h5, p, a, caption, span, td');
+
+  elementsToReplace.forEach(element => {
+    const lowerCaseText = element.innerText.toLowerCase();
+    const lowerCaseKeyword = obj.keyword.toLowerCase();
+
+    if (lowerCaseText.includes(lowerCaseKeyword)) {
+      switch (obj.type) {
+        case '0':
+          // Remove
+          element.innerHTML = element.innerHTML.replace(new RegExp(obj.keyword, 'gi'), '');
+          break;
+        case '1':
+          // Replace
+          element.innerHTML = element.innerHTML.replace(new RegExp(obj.keyword, 'gi'), obj.replace);
+          break;
+        case '2':
+          // Blur
+          element.style.color = 'transparent';
+          element.style.textShadow = '0 0 8px rgba(0,0,0,0.5)';
+          break;
+        default:
+          break;
       }
     }
-  }
-}
+  });
+};
+
